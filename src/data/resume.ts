@@ -31,16 +31,35 @@ export interface Certification {
   issuer?: string
 }
 
+export interface Project {
+  name: string
+  blurb: string
+  tags: string[]
+  liveUrl?: string
+  repoUrl?: string
+}
+
+export interface Photo {
+  /** Path under /public, e.g. "/images/me.jpg". */
+  src: string
+  alt: string
+  caption?: string
+}
+
 export interface Resume {
   name: string
   handle: string
   title: string
   tagline: string
   email: string
+  /** Headshot path under /public (e.g. "/images/me.jpg"). Optional. */
+  avatar?: string
   links: { label: string; href: string }[]
   summary: string
+  photos: Photo[]
   skills: SkillGroup[]
   experience: Experience[]
+  projects: Project[]
   leadership: Experience[]
   education: Education[]
   certifications: Certification[]
@@ -53,6 +72,10 @@ export const resume: Resume = {
   tagline: 'Building and securing cloud-native platforms — from pipeline to production.',
   email: 'garretgardenhire@gmail.com',
 
+  // Drop a headshot at public/images/me.jpg (or change this path).
+  // If the file is missing, the site shows your initials instead.
+  avatar: '/images/me.jpg',
+
   links: [
     { label: 'LinkedIn', href: 'https://www.linkedin.com/in/garretgardenhire' },
     { label: 'GitHub', href: 'https://github.com/ggardenhire' },
@@ -61,6 +84,13 @@ export const resume: Resume = {
 
   summary:
     'Software and Platform Engineer with 6+ years of experience designing, developing, and automating cloud-native platforms across AWS, Kubernetes, and enterprise environments. Experienced in Kubernetes architecture, Python/FastAPI services, REST APIs, infrastructure-as-code, CI/CD, workflow automation, and enterprise platform operations. Proven track record of leading technical initiatives, mentoring engineers, and replacing manual infrastructure processes with scalable, reliable automation.',
+
+  // Drop image files into public/images/ and reference them here.
+  // Leave this array empty ([]) to hide the gallery entirely.
+  photos: [
+    { src: '/images/photo-1.jpg', alt: 'Garret Gardenhire', caption: '// TODO: add a caption' },
+    { src: '/images/photo-2.jpg', alt: 'Garret Gardenhire', caption: '// TODO: add a caption' },
+  ],
 
   skills: [
     {
@@ -98,6 +128,17 @@ export const resume: Resume = {
         'Converted Merck’s manual procedure of device configuration/testing into an automated Ansible playbook with the capabilities to run over all devices in an environment to verify they met government regulatory standards.',
         'Automated AWS EC2 provisioning through Ansible and ServiceNow, reducing a four-week manual provisioning process to approximately half a day and creating a repeatable solution subsequently demonstrated to Fortune 500 clients.',
       ],
+    },
+  ],
+
+  projects: [
+    {
+      name: 'Curtain',
+      blurb:
+        'A security-first, public-facing dashboard for an Unraid server. Exposes only admin-approved metrics (CPU, memory, disk) and quick links via an allowlist model — sensitive data stays hidden. Node.js (zero runtime deps) + React/Vite, shipped as a hardened, non-root, read-only Docker image.',
+      tags: ['Node.js', 'React', 'Vite', 'Docker', 'Unraid', 'Security'],
+      liveUrl: 'https://gardenshire.net',
+      repoUrl: 'https://github.com/ggardenhire/curtain',
     },
   ],
 

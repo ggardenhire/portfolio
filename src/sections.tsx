@@ -7,6 +7,16 @@ export function AboutSection() {
       <div className="prose">
         <p className="prose__lead">{resume.summary}</p>
       </div>
+      {resume.photos.length > 0 && (
+        <div className="gallery">
+          {resume.photos.map((photo) => (
+            <figure className="gallery__item" key={photo.src}>
+              <img className="gallery__img" src={photo.src} alt={photo.alt} loading="lazy" />
+              {photo.caption && <figcaption className="gallery__caption">{photo.caption}</figcaption>}
+            </figure>
+          ))}
+        </div>
+      )}
     </Window>
   )
 }
@@ -66,6 +76,50 @@ export function ExperienceSection() {
   return (
     <Window title="experience — Explorer" status={`${resume.experience.length} position(s)`}>
       <ExperienceList entries={resume.experience} />
+    </Window>
+  )
+}
+
+export function ProjectsSection() {
+  return (
+    <Window title="projects — My Computer" status={`${resume.projects.length} project(s)`}>
+      <div className="cards">
+        {resume.projects.map((project) => (
+          <article className="project" key={project.name}>
+            <h3 className="project__name">{project.name}</h3>
+            <p className="project__blurb">{project.blurb}</p>
+            <ul className="chiplist chiplist--light">
+              {project.tags.map((tag) => (
+                <li className="chip chip--light" key={tag}>
+                  {tag}
+                </li>
+              ))}
+            </ul>
+            <div className="project__links">
+              {project.liveUrl && (
+                <a
+                  className="link-button"
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  Live site →
+                </a>
+              )}
+              {project.repoUrl && (
+                <a
+                  className="link-button"
+                  href={project.repoUrl}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  Source →
+                </a>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
     </Window>
   )
 }

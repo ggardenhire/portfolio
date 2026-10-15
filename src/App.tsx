@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Avatar } from './components/Avatar'
 import { Clock } from './components/Clock'
 import { resume } from './data/resume'
 import {
@@ -8,6 +9,7 @@ import {
   EducationSection,
   ExperienceSection,
   LeadershipSection,
+  ProjectsSection,
   SkillsSection,
 } from './sections'
 
@@ -15,6 +17,7 @@ const TABS = [
   { id: 'about', label: 'About', render: () => <AboutSection /> },
   { id: 'skills', label: 'Skills', render: () => <SkillsSection /> },
   { id: 'experience', label: 'Experience', render: () => <ExperienceSection /> },
+  { id: 'projects', label: 'Projects', render: () => <ProjectsSection /> },
   { id: 'leadership', label: 'Leadership', render: () => <LeadershipSection /> },
   { id: 'education', label: 'Education', render: () => <EducationSection /> },
   { id: 'certs', label: 'Certifications', render: () => <CertificationsSection /> },
@@ -31,16 +34,19 @@ export default function App() {
     <div className="desktop">
       <header className="hero">
         <div className="hero__inner">
-          <p className="hero__eyebrow">~/{resume.handle}</p>
-          <h1 className="hero__name">{resume.name}</h1>
-          <p className="hero__title">{resume.title}</p>
-          <p className="hero__tagline">{resume.tagline}</p>
-          <div className="hero__links">
-            {resume.links.map((l) => (
-              <a key={l.href} href={l.href} target="_blank" rel="noreferrer noopener">
-                [ {l.label} ]
-              </a>
-            ))}
+          <Avatar src={resume.avatar} name={resume.name} className="hero__avatar" />
+          <div className="hero__text">
+            <p className="hero__eyebrow">~/{resume.handle}</p>
+            <h1 className="hero__name">{resume.name}</h1>
+            <p className="hero__title">{resume.title}</p>
+            <p className="hero__tagline">{resume.tagline}</p>
+            <div className="hero__links">
+              {resume.links.map((l) => (
+                <a key={l.href} href={l.href} target="_blank" rel="noreferrer noopener">
+                  [ {l.label} ]
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </header>

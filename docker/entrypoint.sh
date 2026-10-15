@@ -47,34 +47,42 @@ git config --global --add safe.directory "$SRC_DIR"
 # A failed *initial* build is fatal — let the container restart policy retry.
 build_and_deploy
 
-log "Starting nginx..."
-nginx   # daemonizes; master process runs in the background
+# Poll the branch in the background and hot-swap the built site into the web
+# root. nginx serves straight from disk, so a new build needs no reload or
+# restart — the next request just picks up the new files.
+#
+# This runs as a background job; nginx (below) is the container's main process.
+# If nginx ever dies, the container exits and Docker restarts it cleanly — no
+# second `nginx` is ever launched while the first still holds :80, which is
+# what previously caused the "Address in use" crash loop.
+poll_loop() {
+  log "Watching '$REPO_BRANCH' every ${POLL_INTERVAL}s for new commits."
+  while true; do
+    sleep "$POLL_INTERVAL"
 
-log "Watching '$REPO_BRANCH' every ${POLL_INTERVAL}s for new commits."
-while true; do
-  sleep "$POLL_INTERVAL"
-
-  if ! git fetch --quiet origin "$REPO_BRANCH"; then
-    log "git fetch failed; will retry next cycle."
-    continue
-  fi
-
-  local_sha="$(git rev-parse HEAD)"
-  remote_sha="$(git rev-parse "origin/$REPO_BRANCH")"
-
-  if [ "$local_sha" != "$remote_sha" ]; then
-    log "Update detected: ${local_sha:0:7} -> ${remote_sha:0:7}"
-    git reset --hard "origin/$REPO_BRANCH"
-    if build_and_deploy; then
-      log "Site updated to ${remote_sha:0:7}."
-    else
-      log "Build failed; previous version remains live."
+    if ! git fetch --quiet origin "$REPO_BRANCH"; then
+      log "git fetch failed; will retry next cycle."
+      continue
     fi
-  fi
 
-  # Self-heal: make sure nginx is still up.
-  if ! pgrep -x nginx >/dev/null; then
-    log "nginx not running; restarting it."
-    nginx
-  fi
-done
+    local_sha="$(git rev-parse HEAD 2>/dev/null)" || continue
+    remote_sha="$(git rev-parse "origin/$REPO_BRANCH" 2>/dev/null)" || continue
+
+    if [ "$local_sha" != "$remote_sha" ]; then
+      log "Update detected: ${local_sha:0:7} -> ${remote_sha:0:7}"
+      git reset --hard "origin/$REPO_BRANCH"
+      if build_and_deploy; then
+        log "Site updated to ${remote_sha:0:7}."
+      else
+        log "Build failed; previous version remains live."
+      fi
+    fi
+  done
+}
+
+poll_loop &
+
+# Run nginx in the foreground as the container's main process. tini supervises
+# it directly, so its lifetime == the container's lifetime.
+log "Starting nginx..."
+exec nginx -g 'daemon off;'

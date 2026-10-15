@@ -19,6 +19,19 @@ git add -A && git commit -m "Update experience" && git push origin main
 
 Within `POLL_INTERVAL` seconds (default 5 min) the running container pulls the change, rebuilds, and swaps the live site. A failed build (e.g. a syntax error) is logged and the **previous version stays live**.
 
+### Photos
+
+Put image files in [`public/images/`](public/images/) and reference them from `resume.ts`:
+
+- `avatar` → hero headshot (`/images/me.jpg`). If the file is missing, the hero shows your initials instead of a broken image.
+- `photos[]` → the gallery strip in the About section. Set it to `[]` to hide the gallery.
+
+See [`public/images/README.md`](public/images/README.md) for expected filenames and sizes.
+
+### Projects
+
+Add entries to the `projects[]` array in `resume.ts`. Each renders a card with tags and optional **Live site** / **Source** buttons (e.g. [Curtain](https://github.com/ggardenhire/curtain) → gardenshire.net).
+
 ## Local development
 
 ```bash
@@ -87,11 +100,13 @@ Example Nginx Proxy Manager proxy host: Forward Hostname `<unraid-ip>`, Forward 
 ## Structure
 
 ```
+public/
+  images/             # <- drop your photos here (me.jpg, photo-1.jpg, …)
 src/
   data/resume.ts      # <- all site content lives here
   App.tsx             # layout, nav, taskbar
-  sections.tsx        # About / Skills / Experience / … windows
-  components/         # Window chrome, taskbar clock
+  sections.tsx        # About / Skills / Experience / Projects / … windows
+  components/         # Window chrome, Avatar (initials fallback), taskbar clock
   styles/             # reset, theme tokens, app styles
 docker/
   entrypoint.sh       # clone → build → serve → poll-and-redeploy loop
