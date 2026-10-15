@@ -1,13 +1,16 @@
 import { useEffect, useRef, useState } from 'react'
 
-export type GameId = 'minesweeper'
+export type GameId = 'minesweeper' | 'solitaire'
 
 interface StartMenuProps {
   onLaunchGame: (game: GameId) => void
   onClose: () => void
 }
 
-const GAMES: { id: GameId; label: string }[] = [{ id: 'minesweeper', label: 'Minesweeper' }]
+const GAMES: { id: GameId; label: string }[] = [
+  { id: 'minesweeper', label: 'Minesweeper' },
+  { id: 'solitaire', label: 'Solitaire' },
+]
 
 /**
  * The Start popup. Opens above the taskbar button, closes on outside-click or

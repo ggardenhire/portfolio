@@ -4,6 +4,7 @@ import { Clock } from './components/Clock'
 import { GameWindow } from './components/GameWindow'
 import { StartMenu, type GameId } from './components/StartMenu'
 import { Minesweeper } from './games/Minesweeper'
+import { Solitaire } from './games/Solitaire'
 import { resume } from './data/resume'
 import {
   AboutSection,
@@ -35,7 +36,10 @@ export default function App() {
   const [game, setGame] = useState<GameId | null>(null)
   const current = TABS.find((t) => t.id === active) ?? TABS[0]
 
-  const gameTitles: Record<GameId, string> = { minesweeper: 'Minesweeper' }
+  const gameTitles: Record<GameId, string> = {
+    minesweeper: 'Minesweeper',
+    solitaire: 'Solitaire',
+  }
 
   return (
     <div className="desktop">
@@ -73,10 +77,10 @@ export default function App() {
 
       <main className="stage">
         {current.render()}
-        {game === 'minesweeper' && (
+        {game && (
           <div className="window-layer">
-            <GameWindow title="Minesweeper" onClose={() => setGame(null)}>
-              <Minesweeper />
+            <GameWindow title={gameTitles[game]} onClose={() => setGame(null)}>
+              {game === 'minesweeper' ? <Minesweeper /> : <Solitaire />}
             </GameWindow>
           </div>
         )}
