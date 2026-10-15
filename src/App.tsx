@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import { Avatar } from './components/Avatar'
 import { Clock } from './components/Clock'
+import { GameWindow } from './components/GameWindow'
+import { StartMenu, type GameId } from './components/StartMenu'
+import { Minesweeper } from './games/Minesweeper'
 import { resume } from './data/resume'
 import {
   AboutSection,
@@ -28,7 +31,11 @@ type TabId = (typeof TABS)[number]['id']
 
 export default function App() {
   const [active, setActive] = useState<TabId>('about')
+  const [startOpen, setStartOpen] = useState(false)
+  const [game, setGame] = useState<GameId | null>(null)
   const current = TABS.find((t) => t.id === active) ?? TABS[0]
+
+  const gameTitles: Record<GameId, string> = { minesweeper: 'Minesweeper' }
 
   return (
     <div className="desktop">
@@ -64,16 +71,36 @@ export default function App() {
         ))}
       </nav>
 
-      <main className="stage">{current.render()}</main>
+      <main className="stage">
+        {current.render()}
+        {game === 'minesweeper' && (
+          <div className="window-layer">
+            <GameWindow title="Minesweeper" onClose={() => setGame(null)}>
+              <Minesweeper />
+            </GameWindow>
+          </div>
+        )}
+      </main>
 
       <footer className="taskbar">
-        <button className="taskbar__start">
+        {startOpen && (
+          <StartMenu
+            onLaunchGame={(id) => setGame(id)}
+            onClose={() => setStartOpen(false)}
+          />
+        )}
+        <button
+          className={`taskbar__start ${startOpen ? 'is-active' : ''}`}
+          onClick={() => setStartOpen((v) => !v)}
+          aria-haspopup="true"
+          aria-expanded={startOpen}
+        >
           <span className="taskbar__logo" aria-hidden="true">
             ▚
           </span>
           Start
         </button>
-        <div className="taskbar__window">{current.label}</div>
+        <div className="taskbar__window">{game ? gameTitles[game] : current.label}</div>
         <Clock />
       </footer>
     </div>

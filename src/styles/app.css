@@ -135,6 +135,7 @@ body {
 /* ---- Stage / Window ------------------------------------------------------ */
 .stage {
   flex: 1;
+  position: relative;
 }
 .window {
   background: var(--window);
@@ -476,6 +477,168 @@ body {
   padding: 6px 14px;
   font-size: 13px;
   font-family: var(--font-mono);
+}
+.taskbar__start.is-active {
+  box-shadow: var(--bevel-sunken);
+}
+
+/* ---- Start menu ---------------------------------------------------------- */
+.startmenu {
+  position: absolute;
+  left: 6px;
+  bottom: 44px;
+  display: flex;
+  min-width: 220px;
+  background: var(--silver);
+  box-shadow: var(--bevel-raised);
+  padding: 3px;
+  z-index: 20;
+}
+.startmenu__rail {
+  width: 30px;
+  background: linear-gradient(0deg, var(--navy) 0%, var(--navy-light) 100%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 8px 0;
+}
+.startmenu__brand {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  color: #fff;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  letter-spacing: 2px;
+  font-size: 15px;
+}
+.startmenu__list,
+.startmenu__submenu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+}
+.startmenu__item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: transparent;
+  border: none;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: var(--ink);
+  text-align: left;
+}
+.startmenu__item:hover,
+.startmenu__item:focus-visible {
+  background: var(--navy);
+  color: #fff;
+  outline: none;
+}
+.startmenu__chevron {
+  font-size: 11px;
+}
+.startmenu__submenu .startmenu__item {
+  padding-left: 28px;
+  font-size: 13px;
+}
+
+/* ---- Floating window (games) --------------------------------------------- */
+.window-layer {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  z-index: 15;
+}
+.window--floating {
+  pointer-events: auto;
+  width: max-content;
+}
+.window__titlebar--drag {
+  cursor: move;
+  touch-action: none;
+  user-select: none;
+}
+.window--floating .window__btn--close {
+  cursor: pointer;
+}
+
+/* ---- Minesweeper --------------------------------------------------------- */
+.mine {
+  font-family: var(--font-mono);
+}
+.mine__hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--bevel-sunken);
+  padding: 6px 8px;
+  margin-bottom: 8px;
+}
+.mine__counter {
+  background: #000;
+  color: #ff2d2d;
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 2px;
+  padding: 2px 6px;
+  box-shadow: var(--bevel-sunken);
+}
+.mine__face {
+  width: 34px;
+  height: 30px;
+  background: var(--silver);
+  box-shadow: var(--bevel-raised);
+  border: none;
+  font-size: 12px;
+  cursor: pointer;
+}
+.mine__face:active {
+  box-shadow: var(--bevel-sunken);
+}
+.mine__grid {
+  display: grid;
+  grid-template-columns: repeat(9, 26px);
+  grid-template-rows: repeat(9, 26px);
+  gap: 0;
+  box-shadow: var(--bevel-sunken);
+  padding: 3px;
+  background: var(--silver);
+}
+.mine__cell {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 0;
+  margin: 0;
+}
+.mine__cell--hidden {
+  background: var(--silver);
+  box-shadow: var(--bevel-raised);
+  border: none;
+  cursor: pointer;
+  color: #c40000;
+}
+.mine__cell--open {
+  box-shadow: inset 1px 1px 0 0 var(--silver-dark);
+  background: var(--silver-light);
+}
+.mine__cell--bomb {
+  background: #c40000;
+  color: #000;
+}
+.mine__hint {
+  margin: 10px 0 0;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
 }
 
 /* ---- Responsive ---------------------------------------------------------- */
