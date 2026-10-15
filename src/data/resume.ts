@@ -88,8 +88,8 @@ export const resume: Resume = {
   // Drop image files into public/images/ and reference them here.
   // Leave this array empty ([]) to hide the gallery entirely.
   photos: [
-    { src: '/images/photo-1.jpg', alt: 'Garret Gardenhire', caption: '// TODO: add a caption' },
-    { src: '/images/photo-2.jpg', alt: 'Garret Gardenhire', caption: '// TODO: add a caption' },
+    { src: '/images/photo-1.jpg', alt: 'Garret Gardenhire', caption: 'Running in Japan' },
+    { src: '/images/photo-2.jpg', alt: 'Garret Gardenhire', caption: 'My wife and I in Athens' },
   ],
 
   skills: [
