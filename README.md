@@ -81,7 +81,7 @@ Example Nginx Proxy Manager proxy host: Forward Hostname `<unraid-ip>`, Forward 
 
 ## Security notes
 
-- `npm audit` flags two **dev-dependency** advisories in esbuild/vite. They affect the Vite dev server only and are **not present in the production static bundle** that nginx serves. Resolving them requires a major Vite bump (`vite@8`); left pinned deliberately.
+- `npm audit` is clean (0 vulnerabilities) on Vite 8 / `@vitejs/plugin-react` 6. Keep it that way with periodic `npm audit` + dependency bumps.
 - nginx sets `X-Content-Type-Options`, `X-Frame-Options`, and `Referrer-Policy`. Add HSTS/CSP at your TLS-terminating reverse proxy.
 
 ## Structure
