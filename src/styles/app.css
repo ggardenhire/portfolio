@@ -646,12 +646,24 @@ body {
   --card-w: 58px;
   --card-h: 80px;
   font-family: var(--font-ui);
+  /* Green baize card table. */
+  background:
+    radial-gradient(ellipse at 50% 18%, #2f8f57 0%, #1c6038 55%, #124329 100%);
+  padding: 14px;
+  border-radius: 6px;
+  box-shadow:
+    inset 0 0 50px rgba(0, 0, 0, 0.35),
+    inset 0 0 0 2px rgba(0, 0, 0, 0.25);
 }
 .sol__toolbar {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+}
+.sol__seg {
+  display: flex;
+  gap: 2px;
 }
 .sol__btn {
   background: var(--silver);
@@ -661,12 +673,15 @@ body {
   font-size: 13px;
   cursor: pointer;
 }
-.sol__btn:active {
+.sol__btn:active,
+.sol__btn.is-active {
   box-shadow: var(--bevel-sunken);
+  background: var(--silver-light);
 }
 .sol__status {
   font-weight: 700;
-  color: var(--accent-dim);
+  color: #fdf6b2;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
 }
 .sol__top {
   display: flex;
@@ -695,25 +710,36 @@ body {
 .sol-slot {
   width: var(--card-w);
   height: var(--card-h);
-  box-shadow: inset 0 0 0 1px var(--silver-dark);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.22);
   border-radius: 4px;
-  background: color-mix(in srgb, var(--teal) 14%, transparent);
+  background: rgba(0, 0, 0, 0.14);
 }
 .sol-slot {
   display: grid;
   place-items: center;
   border: none;
   font-size: 22px;
-  color: var(--navy);
+  color: rgba(255, 255, 255, 0.85);
   cursor: pointer;
   padding: 0;
 }
 .sol-slot--foundation {
   cursor: default;
 }
+.sol-slot--waste {
+  position: relative;
+  width: calc(var(--card-w) + 36px);
+  justify-items: start;
+  background: transparent;
+  box-shadow: none;
+}
+.sol-waste__card {
+  position: absolute;
+  top: 0;
+}
 .sol-slot__ghost {
   font-size: 20px;
-  color: var(--silver-dark);
+  color: rgba(255, 255, 255, 0.5);
   font-weight: 700;
 }
 .sol-card {

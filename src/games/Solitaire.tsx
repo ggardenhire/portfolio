@@ -109,6 +109,7 @@ function removeFromSource(s: GameState, src: Source) {
 export function Solitaire() {
   const [state, setState] = useState<GameState>(freshDeal)
   const [drag, setDrag] = useState<Source | null>(null)
+  const [drawCount, setDrawCount] = useState<1 | 3>(1)
 
   const won = useMemo(() => state.foundations.every((p) => p.length === 13), [state])
 
@@ -125,9 +126,12 @@ export function Solitaire() {
         next.stock = next.waste.reverse().map((c) => ({ ...c, faceUp: false }))
         next.waste = []
       } else {
-        const card = next.stock.pop()!
-        card.faceUp = true
-        next.waste.push(card)
+        // Flip up to `drawCount` cards; only the last lands playable on top.
+        for (let i = 0; i < drawCount && next.stock.length; i++) {
+          const card = next.stock.pop()!
+          card.faceUp = true
+          next.waste.push(card)
+        }
       }
       return next
     })
@@ -181,6 +185,20 @@ export function Solitaire() {
         <button className="sol__btn" onClick={deal}>
           New deal
         </button>
+        <div className="sol__seg" role="group" aria-label="Cards per draw">
+          <button
+            className={`sol__btn ${drawCount === 1 ? 'is-active' : ''}`}
+            onClick={() => setDrawCount(1)}
+          >
+            Draw 1
+          </button>
+          <button
+            className={`sol__btn ${drawCount === 3 ? 'is-active' : ''}`}
+            onClick={() => setDrawCount(3)}
+          >
+            Draw 3
+          </button>
+        </div>
         <span className="sol__status">{won ? 'You win! 🎉' : ''}</span>
       </div>
 
@@ -195,19 +213,24 @@ export function Solitaire() {
           >
             {state.stock.length ? '🂠' : '↺'}
           </button>
-          <div className="sol-slot" aria-label="Waste">
-            {state.waste.length > 0 &&
-              (() => {
-                const card = state.waste[state.waste.length - 1]
+          <div className="sol-slot sol-slot--waste" aria-label="Waste">
+            {(() => {
+              // Fan the most recent few cards; only the top one is interactive.
+              const fan = state.waste.slice(-(drawCount === 3 ? 3 : 1))
+              return fan.map((card, i) => {
+                const isTop = i === fan.length - 1
                 return (
-                  <CardFace
-                    card={card}
-                    draggable
-                    onDragStart={() => setDrag({ pile: 'waste' })}
-                    onDoubleClick={() => autoToFoundation({ pile: 'waste' })}
-                  />
+                  <div key={card.id} className="sol-waste__card" style={{ left: i * 18 }}>
+                    <CardFace
+                      card={card}
+                      draggable={isTop}
+                      onDragStart={() => isTop && setDrag({ pile: 'waste' })}
+                      onDoubleClick={() => isTop && autoToFoundation({ pile: 'waste' })}
+                    />
+                  </div>
                 )
-              })()}
+              })
+            })()}
           </div>
         </div>
 
