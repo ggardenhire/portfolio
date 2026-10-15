@@ -1,0 +1,37 @@
+:root {
+  /* Classic desktop palette — restrained, professional. */
+  --silver: #c3c7cb;
+  --silver-light: #dfe3e6;
+  --silver-dark: #868a8e;
+  --silver-darker: #4a4d50;
+  --window: #c3c7cb;
+  --panel: #ffffff;
+
+  --ink: #1b1b1b;
+  --ink-soft: #3a3a3a;
+  --muted: #5a5e62;
+
+  --navy: #0a246a;
+  --navy-light: #166fd6;
+  --teal: #008080;
+
+  --accent: #0a7d4d; /* phosphor green, used sparingly */
+  --accent-dim: #0b5c3a;
+
+  --link: #0a3fa6;
+
+  /* Beveled borders, the heart of the look. */
+  --bevel-raised:
+    inset -1px -1px 0 0 var(--silver-darker),
+    inset 1px 1px 0 0 var(--silver-light),
+    inset -2px -2px 0 0 var(--silver-dark),
+    inset 2px 2px 0 0 #ffffff;
+  --bevel-sunken:
+    inset 1px 1px 0 0 var(--silver-darker),
+    inset -1px -1px 0 0 var(--silver-light),
+    inset 2px 2px 0 0 var(--silver-dark),
+    inset -2px -2px 0 0 #ffffff;
+
+  --font-ui: 'Tahoma', 'Geneva', 'MS Sans Serif', 'Segoe UI', sans-serif;
+  --font-mono: 'Cascadia Mono', 'Consolas', 'Lucida Console', 'Courier New', monospace;
+}
