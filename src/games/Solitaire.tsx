@@ -109,7 +109,7 @@ function removeFromSource(s: GameState, src: Source) {
 export function Solitaire() {
   const [state, setState] = useState<GameState>(freshDeal)
   const [drag, setDrag] = useState<Source | null>(null)
-  const [drawCount, setDrawCount] = useState<1 | 3>(1)
+  const [drawCount, setDrawCount] = useState<1 | 3>(3)
 
   const won = useMemo(() => state.foundations.every((p) => p.length === 13), [state])
 
