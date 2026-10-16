@@ -28,7 +28,7 @@ export function SkillsSection() {
         {resume.skills.map((group) => (
           <div className="terminal__block" key={group.category}>
             <div className="terminal__prompt">
-              <span className="terminal__cue">C:\skills\</span>{group.category}&gt;
+              <span className="terminal__cue">C:\skills&gt;</span> dir /{group.category}
             </div>
             <ul className="chiplist">
               {group.items.map((item) => (
