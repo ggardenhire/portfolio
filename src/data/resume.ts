@@ -158,7 +158,7 @@ export const resume: Resume = {
       school: 'University of Arkansas',
       degree: 'B.S. Mechanical Engineering, Minor in Computer Science',
       period: '2020',
-      notes: ['GPA: 3.813', 'Honors College Fellow'],
+      notes: ['Honors College Fellow'],
     },
   ],
 

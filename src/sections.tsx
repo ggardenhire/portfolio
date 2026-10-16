@@ -23,12 +23,12 @@ export function AboutSection() {
 
 export function SkillsSection() {
   return (
-    <Window title="C:\> skills.exe" status={`${resume.skills.length} categories`}>
+    <Window title="Skills" status={`${resume.skills.length} categories`}>
       <div className="terminal">
         {resume.skills.map((group) => (
           <div className="terminal__block" key={group.category}>
             <div className="terminal__prompt">
-              <span className="terminal__cue">C:\skills&gt;</span> dir /{group.category}
+              <span className="terminal__cue">C:\skills\</span>{group.category}&gt;
             </div>
             <ul className="chiplist">
               {group.items.map((item) => (
