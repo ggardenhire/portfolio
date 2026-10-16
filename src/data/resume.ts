@@ -144,6 +144,16 @@ export const resume: Resume = {
 
   leadership: [
     {
+      company: 'Enterprise Vision Technologies',
+      role: 'Crossplane Architect',
+      period: 'October 2025 — June 2026',
+      highlights: [
+        'Led a 4-person engineering team building a Crossplane-based Universal Control Plane for provisioning and managing Kubernetes infrastructure across public cloud and edge environments.',
+        'Owned the technical architecture end to end — authoring the platform design, defining Crossplane Compositions and APIs, and presenting the approach to technical leadership and clients.',
+        'Mentored engineers on Crossplane, Kubernetes, and platform engineering patterns, and set code review and delivery standards for the team.',
+      ],
+    },
+    {
       company: 'Kappa Kappa Psi (KKΨ)',
       role: 'Southwest District Governor / Committee Chair',
       period: 'July 2022 — Present',
