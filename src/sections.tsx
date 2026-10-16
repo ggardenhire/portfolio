@@ -3,7 +3,7 @@ import { resume } from './data/resume'
 
 export function AboutSection() {
   return (
-    <Window title="about.txt — Notepad" status={`${resume.name} · ${resume.title}`}>
+    <Window title="about.txt" status={`${resume.name} · ${resume.title}`}>
       <div className="prose">
         <p className="prose__lead">{resume.summary}</p>
       </div>
@@ -23,7 +23,7 @@ export function AboutSection() {
 
 export function SkillsSection() {
   return (
-    <Window title="Skills" status={`${resume.skills.length} categories`}>
+    <Window title="skills" status={`${resume.skills.length} categories`}>
       <div className="terminal">
         {resume.skills.map((group) => (
           <div className="terminal__block" key={group.category}>
@@ -74,7 +74,7 @@ function ExperienceList({ entries }: { entries: typeof resume.experience }) {
 
 export function ExperienceSection() {
   return (
-    <Window title="experience — Explorer" status={`${resume.experience.length} position(s)`}>
+    <Window title="experience" status={`${resume.experience.length} position(s)`}>
       <ExperienceList entries={resume.experience} />
     </Window>
   )
@@ -82,7 +82,7 @@ export function ExperienceSection() {
 
 export function ProjectsSection() {
   return (
-    <Window title="projects — My Computer" status={`${resume.projects.length} project(s)`}>
+    <Window title="projects" status={`${resume.projects.length} project(s)`}>
       <div className="cards">
         {resume.projects.map((project) => (
           <article className="project" key={project.name}>
@@ -126,7 +126,7 @@ export function ProjectsSection() {
 
 export function LeadershipSection() {
   return (
-    <Window title="leadership — Explorer">
+    <Window title="leadership">
       <ExperienceList entries={resume.leadership} />
     </Window>
   )
@@ -175,7 +175,7 @@ export function CertificationsSection() {
 
 export function ContactSection() {
   return (
-    <Window title="contact — Dial-Up Networking">
+    <Window title="contact">
       <div className="contact">
         <p className="contact__line">
           Want to talk platforms, security, or automation? Drop me a line.
