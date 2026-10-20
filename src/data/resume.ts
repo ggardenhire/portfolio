@@ -140,6 +140,13 @@ export const resume: Resume = {
       liveUrl: 'https://gardenshire.net',
       repoUrl: 'https://github.com/ggardenhire/curtain',
     },
+    {
+      name: 'Podium',
+      blurb:
+        'A self-updating, multi-site static-site runner in a single Docker container. Point it at a JSON list of GitHub repos and it clones, builds, and serves each one on its own port, then polls every branch and hot-swaps the live files on each push — no image rebuilds or manual deploys. A failed build is logged and that site’s previous version stays live. Serves this very portfolio.',
+      tags: ['Docker', 'nginx', 'Bash', 'Node.js', 'Git', 'Self-hosting'],
+      repoUrl: 'https://github.com/ggardenhire/podium',
+    },
   ],
 
   leadership: [
