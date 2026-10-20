@@ -1,20 +1,23 @@
 services:
   portfolio:
-    build: .
-    image: portfolio:latest
+    # Served by Podium (https://github.com/ggardenhire/podium) — a generic
+    # self-updating runner. Build its image once, then this just points it at
+    # the portfolio repo:
+    #   git clone https://github.com/ggardenhire/podium.git
+    #   docker build -t podium:latest ./podium
+    image: podium:latest
     container_name: portfolio
     restart: unless-stopped
     ports:
       # host:container — point your reverse proxy at host port 8080.
       - "8080:80"
     environment:
-      # Public repo → HTTPS clone needs no credentials. For a private repo,
-      # use a token URL, e.g. https://<user>:<token>@github.com/you/repo.git
       REPO_URL: "https://github.com/ggardenhire/portfolio.git"
       REPO_BRANCH: "main"
       POLL_INTERVAL: "300" # seconds between update checks
+      # BUILD_CMD / OUTPUT_DIR use Podium's Node/Vite defaults.
     healthcheck:
-      test: ["CMD", "curl", "-fsS", "http://localhost/healthz"]
+      test: ["CMD", "curl", "-fsS", "http://localhost:80/healthz"]
       interval: 30s
       timeout: 5s
       retries: 3
